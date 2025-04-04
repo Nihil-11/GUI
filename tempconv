@@ -1,0 +1,322 @@
+
+import tkinter as tk
+from tkinter import messagebox
+from tkinter import ttk
+
+
+
+# Main conversion functions
+
+def FtoC(fahrenheit):  # Function "°F to °C"
+
+    if fahrenheit < -459.67:  # Checks the value
+        messagebox.showerror("Error", "Temperature must be greater than -459.67 °F.")
+        return
+    
+    else:
+        celsius = (fahrenheit - 32) * 5/9
+        celsius = round(celsius, 1)
+        return celsius
+
+def CtoF(celsius):  # Function "°C to °F"
+
+    if celsius < -273.15:  # Checks the value
+        messagebox.showerror("Error", "Temperature must be greater than -273.15 °C.")
+        return
+    
+    else:
+        fahrenheit = celsius * 9/5 + 32
+        fahrenheit = round(fahrenheit, 1)
+        return fahrenheit
+
+def CtoK(celsius): # Function "°C to °K"
+
+    if celsius < -273.15: # Checks the value
+        messagebox.showerror("Error", "Temperature must be greater than -273.15 °C.")
+        return
+    
+    else:
+        kelvin = celsius + 273.15
+        kelvin = round(kelvin, 1)
+        return kelvin
+
+def KtoC(kelvin): # Function "°K to °C"
+
+    if kelvin < 0: # Checks the value
+        messagebox.showerror("Error", "Temperature must be greater than 0 °K")
+        return
+    
+    else:
+        celsius = kelvin - 273.15
+        celsius = round(celsius, 1)
+        return celsius
+
+def FtoK(fahrenheit): # Function "°F to °K"
+
+    if fahrenheit < -459.67:  # Checks the value
+        messagebox.showerror("Error", "Temperature must be greater than -459.67 °F.")
+        return
+    
+    else:
+        kelvin = (fahrenheit - 32)*5/9 + 273.15
+        kelvin = round(kelvin, 1)
+        return kelvin
+
+def KtoF(kelvin): # Function "°K to °F"
+
+    if kelvin < 0: # Checks the value
+        messagebox.showerror("Error", "Temperature must be greater than 0 °K")
+        return
+    
+    else:
+        fahrenheit = (kelvin - 273.15)*9/5 + 32
+        fahrenheit = round(fahrenheit, 1)
+        return fahrenheit
+
+
+
+# Functions that connect the main functions with an interface
+
+def convert_temperature_FtoC(event=None):
+    if FtoC_entry.get() == "":  # If entry is empty (no value given)
+        messagebox.showerror("Error", "Please enter a temperature value.")
+        return
+
+    try:
+        fahrenheit_value = float(FtoC_entry.get())
+        result = FtoC(fahrenheit_value)
+        FtoC_result_label.config(text=result)
+
+    except ValueError:
+        messagebox.showerror("Error", "Temperature must be a number that greater than -459.67 °F.")
+
+def convert_temperature_CtoF(event=None):
+    if CtoF_entry.get() == "":  # If entry is empty (no value given)
+        messagebox.showerror("Error", "Please enter a temperature value.")
+        return
+
+    try:
+        celsius_value = float(CtoF_entry.get())
+        result = CtoF(celsius_value)
+        CtoF_result_label.config(text=result)
+
+    except ValueError:
+        messagebox.showerror("Error", "Temperature must be a number that greater than -273.15 °C.")
+
+def convert_temperature_CtoK(event=None):
+    if CtoK_entry.get() == "": # If entry is empty (no value given)
+        messagebox.showerror("Error", "Please enter a temperature value.")
+        return
+    try:
+        celsius_value = float(CtoK_entry.get())
+        result = CtoK(celsius_value)
+        CtoK_result_label.config(text=result)
+
+    except ValueError:
+        messagebox.showerror("Error", "Temperature must be a number that greater than -273.15 °C")
+
+def convert_temperature_KtoC(event=None):
+    if KtoC_entry.get() == "": # If entry is empty (no value given)
+        messagebox.showerror("Error", "Please enter a temperature value.")
+        return
+    try:
+        kelvin_value = float(KtoC_entry.get())
+        result = KtoC(kelvin_value)
+        KtoC_result_label.config(text=result)
+
+    except ValueError:
+        messagebox.showerror("Error", "Temperature must be a number that greater than 0 °K")
+
+def convert_temperature_FtoK(event=None):
+    if FtoK_entry.get() == "": # If entry is empty (no value given)
+        messagebox.showerror("Error", "Please enter a temperature value.")
+        return
+    try:
+        fahrenheit_value = float(FtoK_entry.get())
+        result = FtoK(fahrenheit_value)
+        FtoK_result_label.config(text=result)
+
+    except ValueError:
+        messagebox.showerror("Error", "Temperature must be a number that greater than -459.67 °F.")
+
+def convert_temperature_KtoF(event=None):
+    if KtoF_entry.get() == "": # If entry is empty (no value given)
+        messagebox.showerror("Error", "Please enter a temperature value.")
+        return
+    try:
+        kelvin_value = float(KtoF_entry.get())
+        result = KtoF(kelvin_value)
+        KtoF_result_label.config(text=result)
+
+    except ValueError:
+        messagebox.showerror("Error", "Temperature must be a number that greater than 0 °K")
+
+
+
+def create_window(): # Function that creates the window
+
+    # Visual characteristics
+
+    root = tk.Tk()
+    root.title("Temperature converter")
+    root.geometry("700x500")
+    root.configure(bg='#808080')  # Background color for the window
+
+
+    # Creating the tabs
+
+    notebook = ttk.Notebook(root)
+    style = ttk.Style()
+
+    style.configure("TNotebook", background="#C0C0C0")  # Set the background color of the notebook
+    style.configure("TNotebook.Tab", background='white', padding=[15, 9], font=("Arial", 12))  # Set the tab button color
+    style.configure("TFrame", background="#C0C0C0")  # Set the background color of the page
+    style.map("TNotebook.Tab", background=[("selected", "black")])
+
+    notebook.pack(expand=True, fill='both')
+
+
+    # °F to °C tab
+
+    FtoC_tab = ttk.Frame(notebook)
+    notebook.add(FtoC_tab, text="°F to °C")
+    FtoC_tab.configure(style="TFrame")
+
+    FtoC_label = tk.Label(FtoC_tab, text="Enter temperature in °F", font=("Arial", 16), bg="#C0C0C0")
+    FtoC_label.pack(pady=20)
+
+    global FtoC_entry
+    FtoC_entry = tk.Entry(FtoC_tab, font=("Arial", 20), bg="white", width=20, justify='center')
+    FtoC_entry.pack(pady=10)
+
+    FtoC_convert_button = tk.Button(FtoC_tab, text="Convert to °C", font=("Arial", 16), bg="#C0C0C0", command=convert_temperature_FtoC)
+    FtoC_convert_button.pack(pady=20)
+
+    global FtoC_result_label
+    FtoC_result_label = tk.Label(FtoC_tab, font=("Arial", 20), bg="white", width=20)
+    FtoC_result_label.pack(pady=20)
+
+
+    # °F to °K tab
+
+    FtoK_tab =  ttk.Frame(notebook)
+    notebook.add(FtoK_tab, text="°F to °K")
+    FtoK_tab.configure(style="TFrame")
+
+    Ftok_label = tk.Label(FtoK_tab, text="Enter temperature in °F", font=("Arial", 16), bg="#C0C0C0")
+    Ftok_label.pack(pady=20)
+
+    global FtoK_entry
+    FtoK_entry = tk.Entry(FtoK_tab, font=("Arial", 20), bg="white", width=20, justify='center')
+    FtoK_entry.pack(pady=10)
+
+    FtoK_convert_button = tk.Button(FtoK_tab, text="Convert to °K", font=("Arial", 16), bg="#C0C0C0", command=convert_temperature_FtoK)
+    FtoK_convert_button.pack(pady=20)
+
+    global FtoK_result_label
+    FtoK_result_label = tk.Label(FtoK_tab, font=("Arial", 20), bg="white", width=20)
+    FtoK_result_label.pack(pady=20)
+
+
+    # °C to °F tab
+
+    CtoF_tab = ttk.Frame(notebook)
+    notebook.add(CtoF_tab, text="°C to °F")
+    CtoF_tab.configure(style="TFrame")
+
+    CtoF_label = tk.Label(CtoF_tab, text="Enter temperature in °C", font=("Arial", 16), bg="#C0C0C0")
+    CtoF_label.pack(pady=20)
+
+    global CtoF_entry
+    CtoF_entry = tk.Entry(CtoF_tab, font=("Arial", 20), bg="white", width=20, justify='center')
+    CtoF_entry.pack(pady=10)
+
+    CtoF_convert_button = tk.Button(CtoF_tab, text="Convert to °F", font=("Arial", 16), bg="#C0C0C0", command=convert_temperature_CtoF)
+    CtoF_convert_button.pack(pady=20)
+
+    global CtoF_result_label
+    CtoF_result_label = tk.Label(CtoF_tab, font=("Arial", 20), bg="white", width=20)
+    CtoF_result_label.pack(pady=20)
+
+
+    # °C to °K tab
+
+    CtoK_tab = ttk.Frame(notebook)
+    notebook.add(CtoK_tab, text="°C to °K")
+    CtoK_tab.configure(style="TFrame")
+
+    CtoK_label = tk.Label(CtoK_tab, text="Enter temperature in °C", font=("Arial", 16), bg="#C0C0C0")
+    CtoK_label.pack(pady=20)
+
+    global CtoK_entry
+    CtoK_entry = tk.Entry(CtoK_tab, font=("Arial", 20), bg="white", width=20, justify='center')
+    CtoK_entry.pack(pady=10)
+
+    CtoK_convert_button = tk.Button(CtoK_tab, text="Convert to °K", font=("Arial", 16), bg="#C0C0C0", command=convert_temperature_CtoK)
+    CtoK_convert_button.pack(pady=20)
+
+    global CtoK_result_label
+    CtoK_result_label = tk.Label(CtoK_tab, font=("Arial", 20), bg="white", width=20)
+    CtoK_result_label.pack(pady=20)     
+
+
+    # °K to °C tab
+
+    KtoC_tab = ttk.Frame(notebook)
+    notebook.add(KtoC_tab, text="°K to °C")
+    KtoC_tab.configure(style="TFrame")
+
+    KtoC_label = tk.Label(KtoC_tab, text="Enter temperature in °K", font=("Arial", 16), bg="#C0C0C0")
+    KtoC_label.pack(pady=20)
+
+    global KtoC_entry
+    KtoC_entry = tk.Entry(KtoC_tab, font=("Arial", 20), bg="white", width=20, justify='center')
+    KtoC_entry.pack(pady=10)
+
+    KtoC_convert_button = tk.Button(KtoC_tab, text="Convert to °C", font=("Arial", 16), bg="#C0C0C0", command=convert_temperature_KtoC)
+    KtoC_convert_button.pack(pady=20)
+
+    global KtoC_result_label
+    KtoC_result_label = tk.Label(KtoC_tab, font=("Arial", 20), bg="white", width=20)
+    KtoC_result_label.pack(pady=20)
+
+
+    # °K to °F tab
+
+    KtoF_tab = ttk.Frame(notebook)
+    notebook.add(KtoF_tab, text="°K to °F")
+    KtoF_tab.configure(style="TFrame")
+
+    KtoF_label = tk.Label(KtoF_tab, text="Enter temperature in °K", font=("Arial", 16), bg="#C0C0C0")
+    KtoF_label.pack(pady=20)
+
+    global KtoF_entry
+    KtoF_entry = tk.Entry(KtoF_tab, font=("Arial", 20), bg="white", width=20, justify='center')
+    KtoF_entry.pack(pady=10)
+
+    KtoF_convert_button = tk.Button(KtoF_tab, text="Convert to °F", font =("Arial", 16), bg="#C0C0C0", command=convert_temperature_KtoF)
+    KtoF_convert_button.pack(pady=20)
+
+    global KtoF_result_label
+    KtoF_result_label = tk.Label(KtoF_tab, font=("Arial", 20), bg="white", width=20)
+    KtoF_result_label.pack(pady=20)
+
+
+
+    # Binding the "Enter" button
+
+    FtoC_entry.bind("<Return>", convert_temperature_FtoC)
+    FtoK_entry.bind("<Return>", convert_temperature_FtoK)
+
+    CtoF_entry.bind("<Return>", convert_temperature_CtoF)
+    CtoK_entry.bind("<Return>", convert_temperature_CtoK)
+
+    KtoC_entry.bind("<Return>", convert_temperature_KtoC)
+    KtoF_entry.bind("<Return>", convert_temperature_KtoF)
+
+
+
+    root.mainloop()
+
+if __name__ == "__main__":
+    create_window()
